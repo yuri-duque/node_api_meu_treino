@@ -4,5 +4,6 @@ import TreinoController from "./controllers/TreinoController"
 const routes = Router();
 
 routes.post("/treino", TreinoController.insert);
+routes.get("/treino", TreinoController.find);
 
 export {routes};

@@ -1,4 +1,3 @@
-import { Int32 } from "bson";
 import mongoose from "mongoose";
 
 const treinoSchema = new mongoose.Schema({
@@ -9,9 +8,9 @@ const treinoSchema = new mongoose.Schema({
             musculo: String,
             sets: [
                 {
-                    repeticoes: Int32,
+                    repeticoes: Number,
                     isKg: Boolean,
-                    peso: Int32
+                    peso: Number
                 }
             ]
         }
