@@ -3,10 +3,11 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import { routes } from "./routes";
+import MongooseConnection from "./infrastructure/database/config";
 
 const app = express();
 
-console.log("starting...")
+console.log("starting...");
 
 // pegandos os arquivos .env e utilizando as variaveis de ambiente
 dotenv.config();
@@ -19,7 +20,11 @@ app.use(cors());
 
 app.use(routes);
 
-// pegando a porta do arquivo env
-const port = process.env.PORT || 5000
+MongooseConnection.Connection();
 
-app.listen(port, () => {console.log(`Server is running: ${process.env.APP_URL}:${port}`)});
+// pegando a porta do arquivo env
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => {
+  console.log(`Server is running: ${process.env.APP_URL}:${port}`);
+});
