@@ -15,7 +15,7 @@ const treinoSchema = new mongoose.Schema({
             ]
         }
     ]
-})
+});
 
 const Treino = mongoose.model('Treino', treinoSchema);
 

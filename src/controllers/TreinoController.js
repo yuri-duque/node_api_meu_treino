@@ -1,4 +1,6 @@
 import Treino from "../models/Treino";
+import TreinoService from "../service/TreinoService";
+import ErroHandler from "../utils/ErroHandler";
 
 class TreinoController {
   async insert(req, res) {
@@ -6,22 +8,21 @@ class TreinoController {
 
     try {
       // inserindo treino
-      await Treino.create(treino);
+      await new TreinoService().insert(treino);
 
       return res.json(treino);
     } catch (err) {
-      res.status(500).json({ message: err });
+      res.status(500).json({ message: err.message });
     }
   }
 
   async find(req, res) {
     try {
-      // busca todos os treinos
-      let treinos = await Treino.find();
+      let treinos = await new TreinoService().find();
 
       return res.json(treinos);
     } catch (err) {
-      res.status(500).json({ message: err });
+      res.status(500).json({ message: err.message });
     }
   }
 
@@ -29,28 +30,24 @@ class TreinoController {
     const { id } = req.params;
 
     try {
-      // busca o treino pelo id
-      let treino = await Treino.findById(id);
+      let treino = await new TreinoService().findById(id);
 
-      if (treino) return res.json(treino);
-      else return res.status(404).json({ message: "Treino não encontrado!" });
+      return res.json(treino);
     } catch (err) {
-      res.status(500).json({ message: err });
+      ErroHandler.retorno(res, err);
     }
   }
 
   async update(req, res) {
     const { id } = req.params;
-
     let treino = new Treino(req.body);
 
     try {
-      // encontra e atualiza o treino
-      treino = await Treino.findByIdAndUpdate(id, treino);
+      treino = await new TreinoService().findByIdAndUpdate(id, treino);
 
       return res.json(treino);
     } catch (err) {
-      res.status(500).json({ message: err });
+      res.status(500).json({ message: err.message });
     }
   }
 
@@ -58,12 +55,11 @@ class TreinoController {
     const { id } = req.params;
 
     try {
-      // encontra e deleta o treino
-      const treino = await Treino.findByIdAndDelete(id);
+      const treino = await new TreinoService().findByIdAndDelete(id);
 
       return res.status(200);
     } catch (err) {
-      res.status(500).json({ message: err });
+      res.status(500).json({ message: err.message });
     }
   }
 }
