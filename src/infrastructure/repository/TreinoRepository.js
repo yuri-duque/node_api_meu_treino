@@ -20,13 +20,13 @@ export default class TreinoRepository {
   }
 
   async update(id, treino) {
-    treino = await Treino.findByIdAndUpdate(id, treino);
+    treino = await Treino.updateOne(id, treino);
 
     return treino;
   }
 
   async delete(id) {
-    const treino = await Treino.findByIdAndDelete(id);
+    const treino = await Treino.deleteOne(id);
 
     return treino;
   }

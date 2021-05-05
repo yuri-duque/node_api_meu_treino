@@ -3,19 +3,6 @@ import TreinoService from "../service/TreinoService";
 import ErroHandler from "../utils/ErroHandler";
 
 class TreinoController {
-  async insert(req, res) {
-    const treino = new Treino(req.body);
-
-    try {
-      // inserindo treino
-      await new TreinoService().insert(treino);
-
-      return res.json(treino);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  }
-
   async find(req, res) {
     try {
       let treinos = await new TreinoService().find();
@@ -38,12 +25,24 @@ class TreinoController {
     }
   }
 
+  async insert(req, res) {
+    const treino = new Treino(req.body);
+
+    try {
+      await new TreinoService().insert(treino);
+
+      return res.json(treino);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  }
+
   async update(req, res) {
     const { id } = req.params;
     let treino = new Treino(req.body);
 
     try {
-      treino = await new TreinoService().findByIdAndUpdate(id, treino);
+      treino = await new TreinoService().update(id, treino);
 
       return res.json(treino);
     } catch (err) {
@@ -55,7 +54,7 @@ class TreinoController {
     const { id } = req.params;
 
     try {
-      const treino = await new TreinoService().findByIdAndDelete(id);
+      const treino = await new TreinoService().delete(id);
 
       return res.status(200);
     } catch (err) {

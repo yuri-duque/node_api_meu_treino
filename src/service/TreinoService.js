@@ -17,19 +17,23 @@ export default class TreinoService {
   }
 
   async insert(treino) {
-    await new TreinoRepository().create(treino);
+    await new TreinoRepository().insert(treino);
 
     return treino;
   }
 
   async update(id, treino) {
-    treino = await new TreinoRepository().findByIdAndUpdate(id, treino);
+    await this.findById(id);
+
+    treino = await new TreinoRepository().update(id, treino);
 
     return treino;
   }
 
   async delete(id) {
-    const treino = await new TreinoRepository().findByIdAndDelete(id);
+    await this.findById(id);
+
+    const treino = await new TreinoRepository().delete(id);
 
     return treino;
   }
